@@ -11,7 +11,6 @@ model = AutoModelForCausalLM.from_pretrained(
     torch_dtype="auto",
     device_map="auto"
 )
-model.load_state_dict(torch.load("/root/dataDisk/model/qwen_save", weights_only=True))
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 
 messages = []
