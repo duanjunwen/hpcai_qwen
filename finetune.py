@@ -63,8 +63,8 @@ for epoch in range(10):
         optimizer.step()
         optimizer.zero_grad()
 
-# save model
-model_ckpt_path = "/root/dataDisk/model/qwen_save"
-optimizer_ckpt_path = "/root/dataDisk/model/qwen_optim_save"
-booster.save_model(model, model_ckpt_path)
-booster.save_optimizer(optimizer, optimizer_ckpt_path)
+# save model use booster
+model_ckpt_path = "/root/dataDisk/model/qwen_shard_save"
+optimizer_ckpt_path = "/root/dataDisk/model/qwen_shard_optim_save"
+booster.save_model(model, model_ckpt_path, shard=True)
+booster.save_optimizer(optimizer, optimizer_ckpt_path, shard=True)

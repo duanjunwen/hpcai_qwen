@@ -1,23 +1,20 @@
 import json
+import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 # model_name = "Qwen/Qwen2.5-0.5B-Instruct"
 model_name = "/root/dataDisk/model/qwen"
-model_ckpt_path = "/root/dataDisk/model/qwen_save"
+model_ckpt_path = "/root/dataDisk/model/qwen_shard_save"
 data_path = "/root/commonData/Wukong/wukong.jsonl"
 model = AutoModelForCausalLM.from_pretrained(
-    model_name,
+    model_ckpt_path,
     torch_dtype="auto",
     device_map="auto"
 )
+model.load_state_dict(torch.load("/root/dataDisk/model/qwen_save", weights_only=True))
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 
-prompt = "Give me a short introduction to large language model."
-messages = [
-    {"role": "system", "content": "You are Qwen, created by Alibaba Cloud. You are a helpful assistant."},
-    {"role": "user", "content": prompt}
-]
-
+messages = []
 with open(data_path) as f:
     for line in f:
         content = json.loads(line)['messages'][0]
